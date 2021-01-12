@@ -1,11 +1,14 @@
-import java.util.*;
+package com.zs.exc2;
+
+import java.util.Scanner;
 class Pallimdrome
 {
-    int number,copy,result=0,rem;
-    Scanner scan=new Scanner(System.in);
-    public
-    void check()
+    static int number,copy,result=0,rem;
+
+    public static void check()
     {
+        Scanner scan=new Scanner(System.in);
+        System.out.println("Enter a number");
         number=scan.nextInt();
         copy=number;
         while(number>0)
@@ -20,7 +23,7 @@ class Pallimdrome
         else
             System.out.println("The given number is not pallimdrome");
     }
-    public static void main(String)
+    public static void main(String[] args)
     {
         Pallimdrome pal=new Pallimdrome();
         pal.check();
