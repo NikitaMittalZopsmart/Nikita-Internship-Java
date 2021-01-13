@@ -26,7 +26,7 @@ public class EMIcal {
         }
         public static void main(String[] args)
         {
-            com.zs.exc2.EMIcalc obj=new com.zs.exc2.EMIcalc();
+           EMIcal obj=new EMIcal();
             obj.inputarguments();
             obj.calculate();
         }

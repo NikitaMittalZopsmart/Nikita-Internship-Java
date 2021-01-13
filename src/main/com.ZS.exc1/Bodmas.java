@@ -15,8 +15,6 @@ class Bodmas
             char[] num = inpstring.toCharArray();
             Stack<Integer> operands = new Stack<Integer>();
             Stack<Character> opt = new Stack<Character>();
-
-
             for (int i = 0; i < num.length; i++)
             {
                 System.out.println(num[i]);
