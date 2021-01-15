@@ -1,13 +1,14 @@
 package com.zs.exc2;
 import java.util.Scanner;
-public class Printword {
+public class PrintWord {
     Scanner scan=new Scanner(System.in);
-    String inputstring="";
+    String inputString ="";
+    //This function is displaying different word.
     public void display()
     {
         System.out.print("enter a string");
-        inputstring=scan.nextLine();
-        String[] stresult=inputstring.split(" ");
+        inputString =scan.nextLine();
+        String[] stresult= inputString.split(" ");
 
 
         for(int i=0;i< stresult.length;i++)
@@ -15,7 +16,7 @@ public class Printword {
     }
     public static void main(String args[])
     {
-        Printword obj=new Printword();
-        obj.display();
+
+        new PrintWord().display();
     }
 }
