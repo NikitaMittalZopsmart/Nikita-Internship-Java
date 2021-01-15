@@ -1,5 +1,9 @@
-package zs.com.exc4;
+package java;
 import java.util.logging.Logger;
+
+/**
+ * Using logger
+ */
 public class MyClass {
     private static Logger LOGGER;
 
@@ -16,5 +20,4 @@ public class MyClass {
             LOGGER.warning("a warning msg");
             LOGGER.severe("a severe msg");
         }
-    }
-
+}
