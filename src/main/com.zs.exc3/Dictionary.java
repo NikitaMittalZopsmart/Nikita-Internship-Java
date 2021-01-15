@@ -2,6 +2,9 @@ package com.zs.exc3;
 
 import java.util.*;
 
+/**
+ * This class is to develope a dictionary.
+ */
 public class Dictionary {
     Scanner scan = new Scanner(System.in);
     String inputString ="" ;
@@ -32,7 +35,11 @@ public class Dictionary {
             System.out.println("This word is not present");
 
     }
-    //This function is displaying the meaning of a particular given word.
+
+    /**
+     * This function is displaying the meaning of a particular given word.
+     */
+
     public void meaning() {
         System.out.println("Enter a string");
         inputString = scan.next();
@@ -61,7 +68,11 @@ public class Dictionary {
             System.out.println(mapElement.getKey() + " : " + mapElement.getValue());
         }
     }
-    //This function is displaying all words stating with a particular string.
+
+    /**
+     * This function is displaying all words stating with a particular string.
+     */
+
     public void startingWith() {
         System.out.println("Enter a string from where to start search");
         inputString = scan.next();
@@ -72,7 +83,11 @@ public class Dictionary {
                 System.out.println(str);
         }
     }
-   //This function is displaying all the similar words to a specific word.
+
+    /**
+     * This function is displaying all the similar words to a specific word.
+     */
+
     public void similar() {
         System.out.println("Enter a word whose similar is to be display");
         inputString = scan.next();
@@ -95,7 +110,11 @@ public class Dictionary {
         }
 
     }
-   //This function is to call other functions.
+
+    /**
+     * This function is to call other functions.
+     */
+
     public void check() {
         do{
             System.out.println("1.insert 2.Search 3.Meaning 4.statingwith 5.Similar 6.Display 7.Exit");
