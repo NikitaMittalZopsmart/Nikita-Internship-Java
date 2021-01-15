@@ -1,7 +1,12 @@
 package com.zs.exc2;
 
+/**
+ * This Class is to calcuate the sum of 1d array and 2d array.
+ */
 public class ArraySum {
-    //This function is adding 1D array.
+    /**
+     * This function is calculating the sum of 1D arrays.
+     */
     public void sum1Darrays() {
         int a[] = {1, 2, 3, 4, 5};
         int b[] = {6, 7, 8, 9, 10};
@@ -17,7 +22,9 @@ public class ArraySum {
         }
     }
 
-    //This function is adding 2D array
+    /**
+     * This function is calculating the sum of 2d arrays.
+     */
     public void sum2Darrays() {
 
         int a[][] = {{1, 2, 3}, {4, 5, 6}};

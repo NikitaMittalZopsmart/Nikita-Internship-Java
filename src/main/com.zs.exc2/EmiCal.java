@@ -2,6 +2,9 @@ package com.zs.exc2;
 
 import java.util.Scanner;
 
+/**
+ * This class is developed to calculate EMI for given principle,rate of interest,time.
+ */
 public class EmiCal {
     float principle, rate, time;
     Scanner scan = new Scanner(System.in);
@@ -15,7 +18,10 @@ public class EmiCal {
         time = scan.nextFloat();
         calculate();
     }
-    //Calculating EMI for the given inputs.
+
+    /**
+     * This function is calculating the EMI.
+     */
     void calculate() {
         float emi;
 

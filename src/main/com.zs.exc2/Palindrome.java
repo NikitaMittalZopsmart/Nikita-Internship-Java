@@ -2,6 +2,9 @@ package com.zs.exc2;
 
 import java.util.Scanner;
 
+/**
+ * This class is developed to check that a given number is palindrome or not.
+ */
 class Palindrome {
     static int number, copy, result = 0, rem;
 

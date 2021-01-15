@@ -1,5 +1,6 @@
 package com.zs.exc2;
 import java.util.Scanner;
+
 public class PrintWord {
     Scanner scan=new Scanner(System.in);
     String inputString ="";

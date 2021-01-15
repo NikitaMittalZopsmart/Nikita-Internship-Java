@@ -2,6 +2,9 @@ package com.zs.exc2;
 
 import java.util.*;
 
+/**
+ * This class is developed to print the prime number from 1 to a given number.
+ */
 
 public class PrimeNumber {
     int n, flag = 0;

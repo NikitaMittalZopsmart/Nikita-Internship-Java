@@ -2,6 +2,9 @@ package com.zs.exc2;
 
 import java.util.Scanner;
 
+/**
+ * This class is developed to print different letters in a given string.
+ */
 public class PrintDifferent {
 
    //Printing different letters from a given string.

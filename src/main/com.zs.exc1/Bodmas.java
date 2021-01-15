@@ -3,6 +3,10 @@ package com.zs.exc1;
 import java.util.Scanner;
 import java.util.Stack;
 
+/**
+ *This class is to calculate the BODMAS value for an arithemetic expression.
+
+ */
 class Bodmas {
     String inputString = "";
     Scanner scan = new Scanner(System.in);
@@ -13,7 +17,12 @@ class Bodmas {
         System.out.println((calculate()));
     }//Function is ending
 
-    //This function is calculating the BODMAS value for input string.
+
+
+    /**
+     * This method is calculating the BODMAS value for input string.
+     * @return the resulted value after applying the BODMAS.
+     */
     public int calculate() {
         char[] num = inputString.toCharArray();
         Stack<Integer> operands = new Stack<Integer>(); //Storing numerical value in this stack
@@ -49,8 +58,15 @@ class Bodmas {
 
 
         return operands.pop();
-    }//Calculate function is ending.
+    }
 
+    /**
+     * This function is performing airthmetic operation.
+     * @param op op is the operator.
+     * @param b b is 1st operand.
+     * @param a a is 2nd operand.
+     * @return the output value.
+     */
     //airthmeticOperation function is performing is airthmetic operation.
     public static int aithmeticOperation(char op, int b, int a) {
         switch (op) {
@@ -71,6 +87,12 @@ class Bodmas {
         return 0;
     }
 
+    /**
+     * This function is returning the precedence of the operators.
+     * @param ch ch is a operator.
+     * @return The precedence of the given operators.
+     */
+
     static int Prec(char ch) {
         switch (ch) {
             case '+':
@@ -90,7 +112,7 @@ class Bodmas {
         return -1;
     }
 
-    //Main function is starting
+
     public static void main(String[] args) {
         new Bodmas().inputingString();
 

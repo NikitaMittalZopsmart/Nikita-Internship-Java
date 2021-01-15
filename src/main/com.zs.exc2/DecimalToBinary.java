@@ -2,12 +2,19 @@ package com.zs.exc2;
 
 import java.util.Scanner;
 
+/**
+ * This class is developed to convert a decimal number into a binary number.
+ */
 class DecimalToBinary {
     int number, rem;
     String result = "";
     String binResult = "";
     Scanner scan = new Scanner(System.in);
     //This fuction is converting decimal number into binary number.
+
+    /**
+     * This function is converting a decimal number into a binary number.
+     */
     public void convert() {
         System.out.println("Enter a number");
         number = scan.nextInt();
@@ -32,8 +39,8 @@ class DecimalToBinary {
     }
 
     public static void main(String[] args) {
-        DecimalToBinary obj = new DecimalToBinary();
-        obj.convert();
+
+        new DecimalToBinary().convert();
     }
 
 }
