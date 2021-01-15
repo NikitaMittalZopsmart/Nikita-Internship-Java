@@ -1,4 +1,4 @@
-package java;
+package java.com.zs.exe4;
 import java.util.logging.Logger;
 
 /**
