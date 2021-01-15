@@ -1,4 +1,4 @@
-package com.zs.exc2;
+package java.com.zs.exc2;
 
 /**
  * This Class is to calcuate the sum of 1d array and 2d array.
