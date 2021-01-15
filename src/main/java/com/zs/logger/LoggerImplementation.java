@@ -1,17 +1,17 @@
-package java.com.zs.exe4;
+package java.com.zs.logger;
 import java.util.logging.Logger;
 
 /**
  * Using logger
  */
-public class MyClass {
+public class LoggerImplementation {
     private static Logger LOGGER;
 
         static {
             System.setProperty("java.util.logging.config.file",
                     "src/resources/logging.properties");
             //must initialize loggers after setting above property
-            LOGGER = Logger.getLogger(MyClass.class.getName());
+            LOGGER = Logger.getLogger(LoggerImplementation.class.getName());
         }
 
         public static void main(String[] args) {
