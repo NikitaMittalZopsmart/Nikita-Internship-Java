@@ -1,154 +1,128 @@
 package main.java.com.zs.logger;
 
 import java.util.*;
+import java.util.logging.Logger;
 
+/**
+ * This class is developed to implement logger in dictionary.
+ */
 public class Dictionary {
     private final Scanner scan = new Scanner(System.in);
     private String inputString;
-    private static final java.util.logging.Logger loGr;
 
 
-    private  final TreeMap<String, String> ham = new TreeMap<>();
-
-    static {
-        System.setProperty("java.util.logging.config.file",
-                "/home/raramuri/IdeaProjects/zs-java-internship-nikita/src/main/resources/logging.properties");
-
-        loGr = java.util.logging.Logger.getLogger(Dictionary.class.getName());
-
-    }
-
-    public void insert() {
+    /**
+     * This method is inserting word and meaning into dictionary.
+     *
+     * @param logger Logger Object
+     */
+    public void insert(Logger logger, SortedMap<String, String> dictionaryMap) {
         String meaning;
-        loGr.info("Enter a string");
+        logger.info("Enter a string");
         inputString = scan.next();
         inputString = inputString.toLowerCase(Locale.ROOT);
-        loGr.info("Enter meaning");
+        logger.info("Enter meaning");
         meaning = scan.next();
-        if (ham.containsKey(inputString))
-            loGr.info("string is present");
+        if (dictionaryMap.containsKey(inputString))
+            logger.info("string is present already");
         else {
-            ham.put(inputString, meaning);
+            dictionaryMap.put(inputString, meaning);
         }
     }
 
-    public void search() {
-        loGr.info("Enter a string searchString");
+    /**
+     * This method is searching that a particular word is present in the dictionary.
+     *
+     * @param logger Logger Object.
+     */
+    public void search(Logger logger, SortedMap<String, String> dictionaryMap) {
+        logger.info("Enter a string searchString");
         inputString = scan.next();
-        if (ham.containsKey(inputString))
-            loGr.info("string is present");
+        if (dictionaryMap.containsKey(inputString))
+            logger.info("string is present");
         else
-            loGr.info("This word is not present");
+            logger.info("This word is not present");
 
     }
 
-    public void meaning() {
-        loGr.info("Enter a string");
+    /**
+     * This method is displaying the meaning the of  a particular word.
+     *
+     * @param logger Logger Object.
+     */
+    public void meaning(Logger logger, SortedMap<String, String> dictionaryMap) {
+        logger.info("Enter a string");
         inputString = scan.next();
         inputString = inputString.toLowerCase(Locale.ROOT);
-        if (ham.isEmpty()) {
-            loGr.info("Dictionary is empty");
+        if (dictionaryMap.isEmpty()) {
+            logger.info("Dictionary is empty");
 
         } else {
-            if (ham.containsKey(inputString))
-                loGr.info(ham.getOrDefault(inputString,"No Found"));
+            if (dictionaryMap.containsKey(inputString))
+                logger.info(dictionaryMap.getOrDefault(inputString, "No Found"));
             else
-                loGr.info("This Word is not present in dictionary");
+                logger.info("This Word is not present in dictionary");
         }
 
     }
 
-    public void display() {
-        Iterator hmIterator = ham.entrySet().iterator();
-        loGr.info("dictionary");
-        if (ham.isEmpty()) {
-            loGr.info("Dictionary is empty");
+    /**
+     * This method is displaying the dictionary.
+     *
+     * @param logger Logger Object.
+     */
+    public void display(Logger logger, SortedMap<String, String> dictionaryMap) {
+        Iterator dictionaryIterator = dictionaryMap.entrySet().iterator();
+        logger.info("dictionary");
+        if (dictionaryMap.isEmpty()) {
+            logger.info("Dictionary is empty");
 
         }
-        while (hmIterator.hasNext()) {
-            Map.Entry mapElement = (Map.Entry) hmIterator.next();
+        while (dictionaryIterator.hasNext()) {
+            Map.Entry dictionaryElement = (Map.Entry) dictionaryIterator.next();
 
-            loGr.info(mapElement.getKey() + " : " + mapElement.getValue());
+            logger.info(dictionaryElement.getKey() + " : " + dictionaryElement.getValue());
         }
     }
 
-    public void startingWith() {
-        loGr.info("Enter a string from where to start search");
+    /**
+     * This method is displaying all words  of dictionary starting with a particular letter or word.
+     *
+     * @param logger Logger Object.
+     */
+    public void startingWith(Logger logger, SortedMap<String, String> dictionaryMap) {
+        logger.info("Enter a string from where to start search");
         inputString = scan.next();
-        Map<String, String> mp = ham.tailMap(inputString);
-        Set<String> arl = mp.keySet();
+        Map<String, String> wordsStarting = dictionaryMap.tailMap(inputString);
+        Set<String> arl = wordsStarting.keySet();
         for (String str : arl) {
             if (str.startsWith(inputString))
-                loGr.info(str);
+                logger.info(str);
         }
     }
 
-    public void similar() {
-        loGr.info("Enter a word whose similar is to be display");
+    /**
+     * This method is displaying the similar words of a word in dictionary.
+     *
+     * @param logger Logger Object.
+     */
+    public void similar(Logger logger, SortedMap<String, String> dictionaryMap) {
+        logger.info("Enter a word whose similar is to be display");
         inputString = scan.next();
-
         int difCounter;
-        Set<String> arl2 = ham.keySet();
-        for (String str : arl2) {
+        Set<String> wordSet = dictionaryMap.keySet();
+        for (String str : wordSet) {
             difCounter = 0;
-
             for (int j = 0; j < str.length(); j++) {
                 if (str.charAt(j) != inputString.charAt(j))
                     difCounter++;
                 if (difCounter > 1)
                     break;
-
             }
             if (difCounter <= 1)
-                loGr.info(str);
-
-
+                logger.info(str);
         }
-
     }
-
-    public void check() {
-        int ch;
-        do{
-
-            loGr.info("1.insert 2.Search 3.Meaning 4.statingWith 5.Similar 6.Display 7.Exit");
-            loGr.info("enter your cho1ice");
-            ch = scan.nextInt();
-            switch (ch) {
-                case 1:
-                    insert();
-                    break;
-                case 2:
-                    search();
-                    break;
-                case 3:
-                    meaning();
-                    break;
-                case 4:
-                    startingWith();
-                    break;
-                case 5:
-                    similar();
-                    break;
-                case 6:
-                    display();
-                    break;
-                case 7:
-                    System.exit(0);
-                    break;
-                default:
-                    loGr.info("please enter the correct choice");
-                    break;
-            }
-        }while(ch<=6);
-    }
-
-    public static void main(String[] args) {
-        new Dictionary().check();
-
-    }
-
-
 }
 
 
