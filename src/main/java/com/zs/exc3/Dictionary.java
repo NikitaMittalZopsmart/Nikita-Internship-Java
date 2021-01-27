@@ -1,4 +1,4 @@
-package java.com.zs.exc3;
+package main.java.com.zs.exc3;
 
 import java.util.*;
 
@@ -25,7 +25,7 @@ public class Dictionary {
             ham.put(inputString, meaning);
         }
     }
-   //This function is to search the the specific word that this word is present in dictionary.
+    //This function is to search the the specific word that this word is present in dictionary.
     public void search() {
         System.out.println("Enter a string searchstring");
         inputString = scan.next();
