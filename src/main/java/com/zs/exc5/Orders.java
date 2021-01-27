@@ -11,126 +11,118 @@ import java.util.logging.Logger;
  * This class is created to perform the operations in Order table.
  */
 public class Orders {
-    Connection c = null;
+
     PreparedStatement stmt = null;
     ResultSet rs;
     static Scanner scan = new Scanner(System.in);
 
-    String orderId, sourceAd, destinationAd, userId, pId, pinCode, orderDate;
+    String orderId;
+    String sourceAd;
+    String destinationAd;
+    String userId;
+    String pId;
+    String pinCode;
+    String orderDate;
 
-    private static Logger logr;
-    static {
-        System.setProperty("java.util.logging.config.file",
-                "/home/raramuri/IdeaProjects/Myproject/src/logger/logging.properties");
+    private final Logger logger = LogImplement.getLog();
 
-        logr = Logger.getLogger(Ecommerce.class.getName());
-    }
-    /**
-     * To create a database connection.
-     */
-    public void connection(){
 
-        try {
-            Class.forName("org.postgresql.Driver");
-            c = DriverManager.getConnection("jdbc:postgresql://0.0.0.0:2006/postgres",
-                    "postgres", "root123");
-        } catch (Exception e) {
-            logr.info(e.getMessage());
-        }
-        logr.info("Database open successfully");
-
-    }
     /**
      * This function is giving the choice of insert,update,delete and select operations on order table.
-     * @throws SQLException
+     *
+     * @throws SQLException Throwing exceptions.
      */
-    public void orderTable() throws SQLException{
-        int chopertion;
-        logr.info("1.Insert 2.Update 3.Delete 4.Select 5.lastOrder 6.topOrder 7.lastDays 8.exit ");
-        logr.info("Enter your choice of operation");
-        chopertion = scan.nextInt();
-        connection();
-        switch (chopertion) {
+    public void orderTable(Connection c) throws SQLException {
+        int chOpertion;
+        logger.info("1.Insert 2.Update 3.Delete 4.Select 5.lastOrder 6.topOrder 7.lastDays 8.exit ");
+        logger.info("Enter your choice of operation");
+        chOpertion = scan.nextInt();
+
+        switch (chOpertion) {
             case 1:
-                insertOrder();
+                insertOrder(c);
                 break;
             case 2:
-                updateOrder();
+                updateOrder(c);
                 break;
             case 3:
-                deleteOrder();
+                deleteOrder(c);
                 break;
             case 4:
-                selectOrder();
+                selectOrder(c);
                 break;
             case 5:
-                lastOrder();
+                lastOrder(c);
                 break;
             case 6:
-                topOrder();
+                topOrder(c);
                 break;
-            case 7:lastDays();
-                   break;
-            case 8: System.exit(0);
+            case 7:
+                lastDays(c);
+                break;
+            case 8:
+                System.exit(0);
             default:
-                logr.info("please enter correct choice");
+                logger.info("please enter correct choice");
         }
     }
 
     /**
-     * This method is fiding the last order details for a particular pincode.
+     * This method is finding the last order details for a particular pinCode.
+     *
      * @throws SQLException Throwing SQLException
      */
-    public void lastDays() throws SQLException {
-        LocalDate today = LocalDate.now();
-        int x;
-        logr.info("Enter value of x");
-        x= scan.nextInt();
-        LocalDate pre=today.plusDays(-x);
+    public void lastDays(Connection c) throws SQLException {
+
+
+
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
-        String strDate = dateFormat.format(pre);
-        String str="select * from orders_detail where pincode='201345'AND orderdate>='strDate'::date order by orderdate desc;";
-        stmt=c.prepareStatement(str);
-        rs=stmt.executeQuery();
-        while(rs.next())
-            logr.info(rs.getString(1)+"\t"+rs.getDate(2)+"\t"+rs.getString(3)+"\t"+rs.getString(4));
+
+        String str = "select * from orders_detail where pincode='201345'AND orderdate>='strDate'::date order by orderdate desc;";
+        stmt = c.prepareStatement(str);
+        rs = stmt.executeQuery();
+        while (rs.next())
+            logger.info(rs.getString(1) + "\t" + rs.getDate(2) + "\t" + rs.getString(3) + "\t" + rs.getString(4));
     }
 
     /**
      * This fuction is displaying the details of top orders and products  for a particular user.
+     *
      * @throws SQLException Throwing SQLException.
      */
-    public void topOrder() throws SQLException {
-        logr.info("Enter userId");
-        String uid = scan.next();
-        logr.info("Enter value of x");
+    public void topOrder(Connection c) throws SQLException {
+        logger.info("Enter userId");
+        String uId = scan.next();
+        logger.info("Enter value of x");
         int x = scan.nextInt();
         String str = "select od.orderid,od.userid,po.productid,p.productname from orders_detail as od INNER JOIN place_orders po on od.orderid=po.orderid INNER JOIN products p ON po.productid=p.productid where userid = ? order by orderdate desc  limit ? ;";
         stmt = c.prepareStatement(str);
-        stmt.setString(1, uid);
+        stmt.setString(1, uId);
         stmt.setInt(2, x);
         rs = stmt.executeQuery();
         while (rs.next()) {
-            logr.info(rs.getString(1) + "\t" + rs.getString(2) + "\t" + rs.getString(3) + "\t" + rs.getString(4));
+            logger.info(rs.getString(1) + "\t" + rs.getString(2) + "\t" + rs.getString(3) + "\t" + rs.getString(4));
         }
     }
+
     /**
      * This fuction is displaying the details of last orders and products  for a particular user.
+     *
      * @throws SQLException Throwing SQLException.
      */
-    public void lastOrder() throws SQLException {
-        logr.info("Enter userId");
-        String uid = scan.next();
-        logr.info("Enter value of x");
+    public void lastOrder(Connection c) throws SQLException {
+        logger.info("Enter userId");
+        String uId = scan.next();
+        logger.info("Enter value of x");
         int x = scan.nextInt();
         String str = "select * from orders_detail where userid = ? order by orderdate desc limit  ? ;";
         stmt = c.prepareStatement(str);
-        stmt.setString(1, uid);
+        stmt.setString(1, uId);
         stmt.setInt(2, x);
         rs = stmt.executeQuery();
         while (rs.next()) {
 
-            logr.info(rs.getString(1) + "\t" + rs.getDate(2) + "\t" + rs.getString(3) + "\t" + rs.getString(6));
+            logger.info(rs.getString(1) + "\t" + rs.getDate(2) + "\t" + rs.getString(3) + "\t" + rs.getString(6));
         }
 
 
@@ -138,15 +130,18 @@ public class Orders {
 
     /**
      * This function is updating data in order details.
-     * @throws SQLException
+     *
+     * @throws SQLException Throwing Exceptions.
      */
-    public void updateOrder() throws SQLException {
-        String feild1, feild2;
-        String val1, val2;
-        logr.info("enter feild to be updated and field have condtion");
+    public void updateOrder(Connection c) throws SQLException {
+        String feild1;
+        String feild2;
+        String val1;
+        String val2;
+        logger.info("enter feild to be updated and field have condtion");
         feild1 = scan.next();
         feild2 = scan.next();
-        logr.info("Enter new value and value have condition ");
+        logger.info("Enter new value and value have condition ");
         val1 = scan.next();
         val2 = scan.next();
         String str = "UPDATE orders_detail SET " + feild1 + "= ?  FROM place_orders WHERE orders_detail.orderid=place_orders.orderid AND orders_detail." + feild2 + " = ? ;";
@@ -155,18 +150,20 @@ public class Orders {
         stmt.setString(2, val2);
         int result = stmt.executeUpdate();
         if (result == 1)
-            logr.info("Successfully Updated");
+            logger.info("Successfully Updated");
         else
-            logr.info("Not Successfully Updated");
+            logger.info("Not Successfully Updated");
 
     }
+
     /**
-     *   This function is deleting data from order table.
+     * This function is deleting data from order table.
+     *
      * @throws SQLException Throwing SQLException.
      */
-    public void deleteOrder() throws SQLException {
+    public void deleteOrder(Connection c) throws SQLException {
         String feild1, val;
-        logr.info("Enter feild and value making condition to delete");
+        logger.info("Enter feild and value making condition to delete");
         feild1 = scan.next();
         val = scan.next();
         String str = "delete from orders_detail using  place_orders where orders_detail.orderid=place_orders.orderid AND orders_detail." + feild1 + " = ? ;";
@@ -174,30 +171,33 @@ public class Orders {
         stmt.setString(1, val);
         int result = stmt.executeUpdate();
         if (result == 1)
-            logr.info("Successfully Deleted");
+            logger.info("Successfully Deleted");
         else
-            logr.info("Not Successfully Deleted");
+            logger.info("Not Successfully Deleted");
 
     }
+
     /**
-     *   This function is displaying data of Order table.
+     * This function is displaying data of Order table.
      */
-    public void selectOrder() throws SQLException {
+    public void selectOrder(Connection c) throws SQLException {
         String str = "select od.orderid ,userid,productid,source_address,destination_address from orders_detail od INNER JOIN place_orders po ON od.orderid=po.orderid ;";
         stmt = c.prepareStatement(str);
         rs = stmt.executeQuery();
         while (rs.next()) {
 
-            logr.info(rs.getString(1) + "\t" + rs.getString(2) + "\t" + rs.getString(3) + "\t" + rs.getString(4) + "\t" + rs.getString(5));
+            logger.info(rs.getString(1) + "\t" + rs.getString(2) + "\t" + rs.getString(3) + "\t" + rs.getString(4) + "\t" + rs.getString(5));
         }
     }
+
     /**
      * This method is inserting product information in order table.
+     *
      * @throws SQLException Throwing SQLExceptions.
      */
-    public void insertOrder() throws SQLException {
+    public void insertOrder(Connection c) throws SQLException {
         int numberProduct;
-        logr.info(" ID Date Soucead Destinationad Pincode Uid");
+        logger.info(" ID Date Soucead Destinationad Pincode Uid");
         orderId = scan.next();
         orderDate = scan.next();
         sourceAd = scan.next();
@@ -215,10 +215,10 @@ public class Orders {
         stmt.setString(6, userId);
         int result = stmt.executeUpdate();
         if (result != 1) {
-            logr.info("Not successfully Inserted");
+            logger.info("Not successfully Inserted");
             return;
         }
-        logr.info("Enter number of products purchased in this order");
+        logger.info("Enter number of products purchased in this order");
         numberProduct = scan.nextInt();
         for (int i = 0; i < numberProduct; i++) {
             pId = scan.next();
@@ -228,9 +228,9 @@ public class Orders {
             stmt.setString(2, pId);
             result = stmt.executeUpdate();
             if (result == 1)
-                logr.info("Successfully Inserted");
+                logger.info("Successfully Inserted");
             else
-                logr.info("Not Successfully Inserted");
+                logger.info("Not Successfully Inserted");
         }
 
     }

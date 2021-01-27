@@ -1,7 +1,8 @@
 package main.java.com.zs.exc5;
 
 public class LogImplement {
-    private static java.util.logging.Logger logr;
+
+    private LogImplement(){}
 
     /**
      * This is returning a logger object.
@@ -9,10 +10,11 @@ public class LogImplement {
      * @return Returning a logger object.
      */
     public static java.util.logging.Logger getLog() {
+         java.util.logging.Logger logger;
         System.setProperty("java.util.logging.config.file",
-                "/home/raramuri/IdeaProjects/Myproject/src/logger/logging.properties");
+                "/home/raramuri/IdeaProjects/zs-java-internship-nikita/src/main/resources/logging.properties");
 
-        logr = java.util.logging.Logger.getLogger(Ecommerce.class.getName());
-        return logr;
+        logger = java.util.logging.Logger.getLogger(Ecommerce.class.getName());
+        return logger;
     }
 }

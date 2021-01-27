@@ -8,71 +8,55 @@ import java.util.logging.Logger;
  * This class is to perform the operations on User Table.
  */
 public class User {
-    Connection c = null;
+
     PreparedStatement stmt = null;
     ResultSet rs;
     static Scanner scan = new Scanner(System.in);
-    private static Logger logr;
-    static {
-        System.setProperty("java.util.logging.config.file",
-                "/home/raramuri/IdeaProjects/Myproject/src/logger/logging.properties");
+    private static final Logger logger = LogImplement.getLog();
 
-        logr = Logger.getLogger(Ecommerce.class.getName());
-    }
-
-    /**
-     * To create a database connection.
-     */
-    public void connection() {
-
-        try {
-            Class.forName("org.postgresql.Driver");
-            c = DriverManager.getConnection("jdbc:postgresql://0.0.0.0:2006/postgres",
-                    "postgres", "root123");
-        } catch (Exception e) {
-            logr.info(e.getMessage());
-        }
-        logr.info("Database open successfully");
-
-    }
 
     /**
      * This function is giving the choice of insert,update,delete and select operations on user table.
-     * @throws SQLException
+     *
+     * @throws SQLException Throwing Exception.
      */
-    public void userTable() throws SQLException {
+    public void userTable(Connection c) throws SQLException {
 
-        logr.info("1.Insert 2.Update 3.Delete 4.Select 5.exit ");
-        logr.info("Enter your choice of operation");
-        int chopertion = scan.nextInt();
-        connection();
-        switch (chopertion) {
+        logger.info("1.Insert 2.Update 3.Delete 4.Select 5.exit ");
+        logger.info("Enter your choice of operation");
+        int chOpertion = scan.nextInt();
+
+        switch (chOpertion) {
             case 1:
-                insertUSer();
+                insertUSer(c);
                 break;
             case 2:
-                updateUser();
+                updateUser(c);
                 break;
             case 3:
-                deleteUser();
+                deleteUser(c);
                 break;
             case 4:
-                selectUser();
+                selectUser(c);
                 break;
 
             case 5:
                 System.exit(0);
         }
-        c.close();
+
     }
 
     /**
      * This function is inserting data in user table.
+     *
      * @throws SQLException Throw SQLException.
      */
-    public void insertUSer() throws SQLException {
-        String id = "", email = "", name = "", pass = "";
-        logr.info("Id Name Password Email");
+    public void insertUSer(Connection c) throws SQLException {
+        String id ;
+        String email;
+        String name ;
+        String pass ;
+        logger.info("Id Name Password Email");
         id = scan.next();
         name = scan.next();
         pass = scan.next();
@@ -85,66 +69,68 @@ public class User {
         stmt.setString(4, email);
         int result = stmt.executeUpdate();
         if (result == 1)
-            logr.info("successfully updated");
+            logger.info("successfully updated");
         else
-            logr.info("Not Successfully Updated");
+            logger.info("Not Successfully Updated");
 
     }
 
     /**
-     *   This function is displaying data in user table.
+     * This function is displaying data in user table.
      */
 
-    void selectUser() throws SQLException {
+    void selectUser(Connection c) throws SQLException {
         String str = "select * from users";
         stmt = c.prepareStatement(str);
         rs = stmt.executeQuery();
-        logr.info("Userid   UserName   Email      Password");
+        logger.info("Userid   UserName   Email      Password");
         while (rs.next())
-            logr.info(rs.getString(1) + "\t" + rs.getString(2) + "\t\t" + rs.getString(4) + "\t\t " + rs.getString(3));
+            logger.info(rs.getString(1) + "\t" + rs.getString(2) + "\t\t" + rs.getString(4) + "\t\t " + rs.getString(3));
     }
 
     /**
-     *   This function is deleting data from user table.
+     * This function is deleting data from user table.
+     *
      * @throws SQLException Throwing SQLException.
      */
-    public void deleteUser() throws SQLException {
-        String feild1, val;
-        logr.info("Enter field and value making condition to delete");
+    public void deleteUser(Connection c) throws SQLException {
+        String feild1, value;
+        logger.info("Enter field and value making condition to delete");
         feild1 = scan.next();
-        val = scan.next();
+        value = scan.next();
         String str = "delete from users WHERE " + feild1 + " = ?;";
         stmt = c.prepareStatement(str);
-        stmt.setString(1, val);
+        stmt.setString(1, value);
         int result = stmt.executeUpdate();
         if (result == 1)
-            logr.info("successfully deleted");
+            logger.info("successfully deleted");
         else
-            logr.info("Not successfully deleted");
+            logger.info("Not successfully deleted");
 
     }
 
     /**
-     *   This function is updating data in user table.
+     * This function is updating data in user table.
+     *
      * @throws SQLException Throwing SQLException.
      */
-    public void updateUser() throws SQLException {
+    public void updateUser(Connection c) throws SQLException {
         String feild1, feild2;
-        logr.info("Enter field to be updated and condition feild");
+        logger.info("Enter field to be updated and condition feild");
         feild1 = scan.next();
         feild2 = scan.next();
-        logr.info("enter new value and condition value");
-        String newval = scan.next();
-        String newval2 = scan.next();
+        logger.info("enter new value and condition value");
+        String newValue = scan.next();
+        String newValue2 = scan.next();
         String str = "UPDATE users SET " + feild1 + " = ? WHERE " + feild2 + " = ? ;";
         stmt = c.prepareStatement(str);
-        stmt.setString(1, newval);
-        stmt.setString(2, newval2);
+        stmt.setString(1, newValue);
+        stmt.setString(2, newValue2);
         int result = stmt.executeUpdate();
         if (result == 1)
-            logr.info("successfully Updated");
+            logger.info("successfully Updated");
         else
-            logr.info("Not Successfully Updated");
+            logger.info("Not Successfully Updated");
     }
 }
 

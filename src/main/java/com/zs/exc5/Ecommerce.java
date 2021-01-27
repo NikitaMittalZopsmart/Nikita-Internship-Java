@@ -1,5 +1,6 @@
 package main.java.com.zs.exc5;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.logging.Logger;
@@ -9,32 +10,38 @@ import java.util.logging.Logger;
  */
 public class Ecommerce {
 
-    private static Scanner scan=new Scanner(System.in);
-    public static void main(String args[]) throws SQLException, ClassNotFoundException {
+    private static final Scanner scan = new Scanner(System.in);
+
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
         int ch;
-        Logger loGr=LogImplement.getLog();
+        Logger logger = LogImplement.getLog();
+        ConnectionDB connectionObj = new ConnectionDB();
+        Connection c = connectionObj.connection();
         do {
-            loGr.info("1.user 2.Products  3.Orders 4.Exit");
-            loGr.info("Enter you choice of table");
+            logger.info("1.user 2.Products  3.Orders 4.Exit");
+            logger.info("Enter you choice of table");
             ch = scan.nextInt();
 
             switch (ch) {
                 case 1:
-                    new User().userTable();
+                    new User().userTable(c);
                     break;
                 case 2:
-                    new Product().productTable();
+                    new Product().productTable(c);
                     break;
                 case 3:
-                    new Orders().orderTable();
+                    new Orders().orderTable(c);
                     break;
                 case 4:
                     System.exit(0);
+                    return;
                 default:
-                    loGr.info("Please enter a correct choice");
+                    logger.info("Please enter a correct choice");
+
             }
 
-        }while(ch<4);
+        } while (ch < 4);
+        connectionObj.closeConnection();
     }
 }
 
