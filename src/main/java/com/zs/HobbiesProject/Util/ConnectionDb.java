@@ -1,4 +1,4 @@
-package main.java.com.zs.HobbiesProject.Util;
+package com.zs.HobbiesProject.Util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

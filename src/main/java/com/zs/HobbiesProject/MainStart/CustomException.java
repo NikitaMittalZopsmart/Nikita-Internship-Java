@@ -1,4 +1,4 @@
-package main.java.com.zs.HobbiesProject.MainStart;
+package com.zs.HobbiesProject.MainStart;
 
 import java.util.logging.Logger;
 

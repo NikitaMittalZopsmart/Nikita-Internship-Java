@@ -1,4 +1,4 @@
-package main.java.com.zs.HobbiesProject.Model;
+package com.zs.HobbiesProject.Model;
 
 import java.util.Date;
 

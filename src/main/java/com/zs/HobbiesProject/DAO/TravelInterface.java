@@ -1,8 +1,8 @@
-package main.java.com.zs.HobbiesProject.DAO;
+package com.zs.HobbiesProject.DAO;
 
 
-import main.java.com.zs.HobbiesProject.MainStart.LRUMain;
-import main.java.com.zs.HobbiesProject.Model.Travel;
+import com.zs.HobbiesProject.MainStart.LRUMain;
+import com.zs.HobbiesProject.Model.Travel;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

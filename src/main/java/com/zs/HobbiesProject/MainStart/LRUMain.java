@@ -1,7 +1,7 @@
-package main.java.com.zs.HobbiesProject.MainStart;
+package com.zs.HobbiesProject.MainStart;
 
 
-import main.java.com.zs.HobbiesProject.Model.User;
+import com.zs.HobbiesProject.Model.User;
 
 import java.util.Map;
 import java.util.Set;

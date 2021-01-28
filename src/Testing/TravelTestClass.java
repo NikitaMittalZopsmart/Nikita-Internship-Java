@@ -1,6 +1,6 @@
 package Testing;
 
-import main.java.com.zs.HobbiesProject.Model.Travel;
+import com.zs.HobbiesProject.Model.Travel;
 import org.junit.Before;
 import org.junit.Test;
 

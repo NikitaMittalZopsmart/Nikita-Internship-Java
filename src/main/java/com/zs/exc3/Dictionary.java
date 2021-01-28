@@ -1,4 +1,4 @@
-package main.java.com.zs.exc3;
+package com.zs.exc3;
 
 import java.util.*;
 

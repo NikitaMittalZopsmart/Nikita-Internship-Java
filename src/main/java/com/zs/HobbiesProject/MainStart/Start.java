@@ -1,7 +1,7 @@
-package main.java.com.zs.HobbiesProject.MainStart;
+package com.zs.HobbiesProject.MainStart;
 
 
-import main.java.com.zs.HobbiesProject.Util.LogImplement;
+import com.zs.HobbiesProject.Util.LogImplement;
 
 import java.sql.SQLException;
 import java.text.ParseException;

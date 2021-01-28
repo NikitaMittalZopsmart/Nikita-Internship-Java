@@ -1,6 +1,6 @@
 package Testing;
-import main.java.com.zs.HobbiesProject.Model.User;
-import main.java.com.zs.HobbiesProject.MainStart.LRUCache;
+import com.zs.HobbiesProject.Model.User;
+import com.zs.HobbiesProject.MainStart.LRUCache;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,15 +31,15 @@ public class LRUTestCase {
         u.setHobbyName("Video");
         streak1=4;
         cache.putCache(u,streak1);
-        u=new User();
+        /*u=new User();
         u.setuID("User3");
         u.setHobbyName("Chess");
         streak1=5;
-        cache.putCache(u,streak1);
+        cache.putCache(u,streak1);*/
         u=new User();
-        u.setuID("User4");
+        u.setuID("User1");
         u.setHobbyName("Travel");
-        streak1=3;
+        streak1=4;
         cache.putCache(u,streak1);
 
     }
@@ -60,7 +60,11 @@ public class LRUTestCase {
         }
         assertEquals(4,actual);
     }
-
+    @Test
+    public void testDisplay()
+    {
+        cache.displayCache();
+    }
     /**
      * Test that cache is full or not
      */

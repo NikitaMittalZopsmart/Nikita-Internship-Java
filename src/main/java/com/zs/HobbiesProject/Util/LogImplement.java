@@ -1,4 +1,4 @@
-package main.java.com.zs.HobbiesProject.Util;
+package com.zs.HobbiesProject.Util;
 
 /**
  * This class is used to make a logger object to implment logging.

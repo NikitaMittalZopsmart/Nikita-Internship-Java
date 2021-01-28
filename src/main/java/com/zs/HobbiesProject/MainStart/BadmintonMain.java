@@ -1,8 +1,8 @@
-package main.java.com.zs.HobbiesProject.MainStart;
+package com.zs.HobbiesProject.MainStart;
 
 
-import main.java.com.zs.HobbiesProject.DAO.BadmintonImp;
-import main.java.com.zs.HobbiesProject.Model.Badminton;
+import com.zs.HobbiesProject.DAO.BadmintonImp;
+import com.zs.HobbiesProject.Model.Badminton;
 
 import java.sql.SQLException;
 import java.text.DateFormat;

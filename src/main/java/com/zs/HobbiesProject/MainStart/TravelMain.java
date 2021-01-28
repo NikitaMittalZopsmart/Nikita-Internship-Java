@@ -1,9 +1,9 @@
-package main.java.com.zs.HobbiesProject.MainStart;
+package com.zs.HobbiesProject.MainStart;
 
 
 
-import main.java.com.zs.HobbiesProject.DAO.*;
-import main.java.com.zs.HobbiesProject.Model.Travel;
+import com.zs.HobbiesProject.DAO.*;
+import com.zs.HobbiesProject.Model.Travel;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;

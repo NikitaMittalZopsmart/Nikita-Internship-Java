@@ -1,4 +1,4 @@
-package main.java.com.zs.exc2;
+package com.zs.exc2;
 
 import java.util.Scanner;
 

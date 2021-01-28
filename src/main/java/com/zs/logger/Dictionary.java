@@ -1,4 +1,4 @@
-package main.java.com.zs.logger;
+package com.zs.logger;
 
 import java.util.*;
 import java.util.logging.Logger;

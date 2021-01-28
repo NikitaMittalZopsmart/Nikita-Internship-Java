@@ -1,16 +1,16 @@
-package main.java.com.zs.HobbiesProject.DAO;
+package com.zs.HobbiesProject.DAO;
 
 
-import main.java.com.zs.HobbiesProject.MainStart.LRUMain;
-import main.java.com.zs.HobbiesProject.Model.Travel;
-import main.java.com.zs.HobbiesProject.Util.ConnectionDb;
+import com.zs.HobbiesProject.MainStart.LRUMain;
+import com.zs.HobbiesProject.Model.Travel;
+import com.zs.HobbiesProject.Util.ConnectionDb;
 
 import java.sql.*;
 import java.sql.Date;
 import java.util.*;
 import java.util.logging.Logger;
-import main.java.com.zs.HobbiesProject.MainStart.LRUMain;
-import main.java.com.zs.HobbiesProject.Model.Travel;
+import com.zs.HobbiesProject.MainStart.LRUMain;
+import com.zs.HobbiesProject.Model.Travel;
 /**
  * This class is implementing Travel Interface to perform database operations.
  */
