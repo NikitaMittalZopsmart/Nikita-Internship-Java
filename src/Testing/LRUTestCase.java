@@ -36,6 +36,11 @@ public class LRUTestCase {
         u.setHobbyName("Chess");
         streak1=5;
         cache.putCache(u,streak1);
+        u=new User();
+        u.setuID("User4");
+        u.setHobbyName("Travel");
+        streak1=3;
+        cache.putCache(u,streak1);
 
     }
 
@@ -53,7 +58,7 @@ public class LRUTestCase {
 
             }
         }
-        assertEquals(5,actual);
+        assertEquals(4,actual);
     }
 
     /**
@@ -62,9 +67,10 @@ public class LRUTestCase {
     @Test
     public void testCacheSize()
     {
+
         int size= cache.sizeOfCache();
 
-        assertEquals(3,size);
+        assertEquals(4,size);
     }
 
     /**
@@ -76,5 +82,17 @@ public class LRUTestCase {
         Set<Map.Entry<User, Integer>> entrySet = cache.getVal();
         assertNotNull(entrySet);
     }
+    @Test
+    public void firstElement() {
+        Set<Map.Entry<User, Integer>> entrySet = cache.getVal();
+        int actual=0;
+        for (Map.Entry<User, Integer> entry : entrySet) {
+            actual = entry.getValue();
+            break;
+
+        }
+        assertEquals(3,actual);
+    }
+
 
 }
