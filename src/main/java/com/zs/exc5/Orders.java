@@ -77,9 +77,10 @@ public class Orders {
 
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
-
-        String str = "select * from orders_detail where pincode='201345'AND orderdate>='strDate'::date order by orderdate desc;";
+         String pinCode= scan.next();
+        String str = "select * from orders_detail where pincode=? AND orderdate>='strDate'::date order by orderdate desc;";
         stmt = c.prepareStatement(str);
+        stmt.setString(1,pinCode);
         rs = stmt.executeQuery();
         while (rs.next())
             logger.info(rs.getString(1) + "\t" + rs.getDate(2) + "\t" + rs.getString(3) + "\t" + rs.getString(4));
