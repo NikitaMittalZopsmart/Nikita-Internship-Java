@@ -1,4 +1,4 @@
-package Testing;
+package com.zs.HobbiesProject;
 
 import com.zs.HobbiesProject.Model.Travel;
 import org.junit.Before;
@@ -16,35 +16,35 @@ import static org.junit.Assert.assertNotNull;
  * Test class to test travel object.
  */
 public class TravelTestClass {
-    private Travel traObject=new Travel();
+    private final Travel travelObject =new Travel();
     Date d;
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     DateFormat timeFormat = new SimpleDateFormat("hh:mm:ss");
 
     /**
-     * Intializing all value for Travel Object.
+     * Initializing all value for Travel Object.
      * @throws ParseException Throwing exception.
      */
     @Before
     public void start() throws ParseException {
         String inputDate ="20:01:12";
         d = timeFormat.parse(inputDate);
-        traObject.setStartTime(d);
+        travelObject.setStartTime(d);
         inputDate ="20:10:12";
         d = timeFormat.parse(inputDate);
-        traObject.setEndTime(d);
+        travelObject.setEndTime(d);
         inputDate ="2021-01-12";
         d = dateFormat.parse(inputDate);
-        traObject.setTickDate(d);
-        traObject.setDistance(22);
-        traObject.setEndPoint("UP");
-        traObject.setStartingPoint("MP");
+        travelObject.setTickDate(d);
+        travelObject.setDistance(22);
+        travelObject.setEndPoint("UP");
+        travelObject.setStartingPoint("MP");
 
     }
     @Test
     public void testGetStartPoint()
     {
-        assertNotNull(traObject.getStartingPoint());
+        assertNotNull(travelObject.getStartingPoint());
     }
 
     /**
@@ -53,32 +53,32 @@ public class TravelTestClass {
     @Test
     public void testCompleteTravelObject()
     {
-        assertNotNull(traObject);
+        assertNotNull(travelObject);
     }
     @Test
     public void testGetEEndPoint()
     {
-        assertNotNull(traObject.getEndPoint());
+        assertNotNull(travelObject.getEndPoint());
     }
     @Test
     public void testGetDistance()
     {
-        assertEquals(3,(int) traObject.getDistance());
+        assertEquals(3,(int) travelObject.getDistance());
     }
     @Test
     public void testGetStartTime()
     {
-        assertNotNull(traObject.getStartTime());
+        assertNotNull(travelObject.getStartTime());
     }
     @Test
     public void testGetEndTime()
     {
-        assertNotNull(traObject.getEndTime());
+        assertNotNull(travelObject.getEndTime());
     }
     @Test
     public void testGetTickDate()
     {
-        assertNotNull(traObject.getTickDate());
+        assertNotNull(travelObject.getTickDate());
     }
 
 }

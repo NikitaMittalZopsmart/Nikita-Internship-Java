@@ -9,8 +9,8 @@ import java.util.logging.Logger;
  * This class is developed to create a connection with database.
  */
 public class ConnectionDb {
-    private Connection c = null;
-    private static Logger logger=LogImplement.getLog();
+    private Connection connection = null;
+    private static final Logger logger = LogImplement.getLog();
 
 
     /**
@@ -24,18 +24,21 @@ public class ConnectionDb {
             logger.info("in connection");
             Class.forName("org.postgresql.Driver");
 
-            c = DriverManager.getConnection("jdbc:postgresql://0.0.0.0:2006/nikitadatabas",
+            connection = DriverManager.getConnection("jdbc:postgresql://0.0.0.0:2006/nikitadatabas",
                     "nikitaintern", "nikita");
+
         } catch (Exception e) {
             logger.info(e.getMessage());
+
         }
+
         logger.info("Database open successfully");
 
-        return c;
+        return connection;
     }
 
     public void closeConnection() throws SQLException {
-        c.close();
+        connection.close();
     }
 
 }

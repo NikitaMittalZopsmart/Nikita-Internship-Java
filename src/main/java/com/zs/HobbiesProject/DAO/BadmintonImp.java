@@ -9,18 +9,24 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Date;
+
+import java.util.Set;
+import java.util.TreeMap;
 import java.util.logging.Logger;
 
 public class BadmintonImp implements BadmintonInterface{
 
-    private PreparedStatement insertStament;
-    private PreparedStatement stmt2;
-    private Connection c;
+    private PreparedStatement insertStatement;
+    private PreparedStatement fetchStatement;
+    private Connection connection;
 
-    private ConnectionDb cObj=new ConnectionDb();
+    private ConnectionDb connectionObj =new ConnectionDb();
     String uid;
-    ResultSet rs;
+    ResultSet resultSet;
 
     Scanner scan = new Scanner(System.in);
 
@@ -34,7 +40,7 @@ public class BadmintonImp implements BadmintonInterface{
     }
 
     /**
-     * This funtion is converting a date from java.sql to java.util .
+     * This function is converting a date from java.sql to java.util  format.
      * @param sqlDate A date in java.sql format.
      * @return A date in java.util format.
      */
@@ -48,64 +54,67 @@ public class BadmintonImp implements BadmintonInterface{
     }
 
     /**
-     * This function is used to create a preparedStatement for inserting values in travel table.
+     * This function is  creating a preparedStatement for inserting record in badminton table.
      * @throws SQLException Throwing SQLException.
      */
-    public void prepareStatements1() throws SQLException {
-        c = cObj.connection();
-        insertStament = c.prepareStatement("insert into badminton values(?,?,?,?,?,?);");
+    public Connection prepareStatements1() throws SQLException {
+        connection = connectionObj.connection();
+        insertStatement = connection.prepareStatement("insert into badminton values(?,?,?,?,?,?);");
+         return connection;
     }
 
     /**
-     * This function is used to create a preparedStatement to fetch the travel table dat for a particular user. in travel table.
+     * This function is  creating a preparedStatement to fetch the badminton table data for a particular user.
      * @throws SQLException Throwing SQLException.
      */
-    public void prepareStatements2() throws SQLException {
-        c = cObj.connection();
-        stmt2 = c.prepareStatement("select * from badminton where user_id=? order by hobby_date ;");
+    public Connection prepareStatements2() throws SQLException {
+        connection = connectionObj.connection();
+        fetchStatement = connection.prepareStatement("select * from badminton where user_id=? order by hobby_date ;");
+        return connection;
     }
 
     /**
      * This method is created to insert a record in badminton table.
-     * @param bObj An object of travel class.
+     * @param badmintonObject An object of travel class.
      * @param logger A logger Object.
      * @throws SQLException Throwing SQLExceptions.
      */
     @Override
-    public void create(Badminton bObj, Logger logger) throws SQLException {
+    public void create(Badminton badmintonObject, Logger logger) throws SQLException {
 
         logger.info("enter user id");
-        prepareStatements1();
+        Connection connection=prepareStatements1();
         uid = scan.next();
-        insertStament.setDate(1, convertUtilToSql(bObj.getEndTime()));
-        insertStament.setDate(2, convertUtilToSql(bObj.getStartTime()));
-        insertStament.setDate(3, convertUtilToSql(bObj.getTickDate()));
-        insertStament.setInt(4, bObj.getNumberOfMove());
-        insertStament.setString(5, bObj.getResult());
+        insertStatement.setDate(1, convertUtilToSql(badmintonObject.getEndTime()));
+        insertStatement.setDate(2, convertUtilToSql(badmintonObject.getStartTime()));
+        insertStatement.setDate(3, convertUtilToSql(badmintonObject.getTickDate()));
+        insertStatement.setInt(4, badmintonObject.getNumberOfMove());
+        insertStatement.setString(5, badmintonObject.getResult());
 
-        insertStament.setString(6, uid);
-        int m = insertStament.executeUpdate();
+        insertStatement.setString(6, uid);
+        int m = insertStatement.executeUpdate();
         if (m == 1)
             logger.info("successfully inserted");
         else
             logger.info("not inserted");
+        connection.close();
     }
 
     /**
      * This method is created to calculate the latest streak for badminton hobby for a particular user.
-     * @param arr An arraylist have dates in a particular order.
+     * @param dateList An arraylist have dates in a particular order.
      * @param logger A logger Object.
      * @param uidInput User Id for which we are finding lateststreak.
      * @throws SQLException Throwing SQLException.
      */
     @Override
-    public void latestStreak(ArrayList<Date> arr, Logger logger, String uidInput, LRUMain lruObj) throws SQLException {
+    public void latestStreak(ArrayList<Date> dateList, Logger logger, String uidInput, LRUMain lruObject) throws SQLException {
         logger.info("In lateststreak");
         int stIndex = 0;
         int endIndex;
         int max = 0;
-        for (int j = 0; j < arr.size() - 1; j++) {
-            long noOfDaysBetween = (long) arr.get(j + 1).getDate() - arr.get(j).getDate();
+        for (int j = 0; j < dateList.size() - 1; j++) {
+            long noOfDaysBetween = (long) dateList.get(j + 1).getDate() - dateList.get(j).getDate();
             if (noOfDaysBetween == 1) {
                 endIndex = j + 1;
                 max = endIndex - stIndex;
@@ -115,33 +124,33 @@ public class BadmintonImp implements BadmintonInterface{
             }
         }
         logger.info("latestStreak"+max);
-        lruObj.putInCache(uidInput,logger,"badminton",max);
+        lruObject.putInCache(uidInput,logger,"badminton",max);
 
     }
 
     /**
-     * This method is to get the dates for badminton hobby for a particular object.
+     * This method is to fetch the dates of a particular user having badminton as a hobby.
      * @param uidInput User Id for which we are finding latest streak.
      * @param logger A logger Object.
-     * @param ch A integer to decide which method is to call among lateststreak and loneststreak.
+     * @param choice A integer to decide which method is to call among lateststreak and loneststreak.
      * @throws SQLException Throwing SQLExceptions.
      */
     @Override
-    public void streak(String uidInput, Logger logger, int ch,LRUMain lruObj) throws SQLException {
+    public void streak(String uidInput, Logger logger, int choice, LRUMain lruObj) throws SQLException {
 
         if(lruObj.getValue(uidInput,logger,"badminton"))
             return ;
         logger.info("In streak");
         List<Date> arr = new ArrayList<>();
-        prepareStatements2();
-        stmt2.setString(1, uidInput);
-        rs = stmt2.executeQuery();
+        Connection connection=prepareStatements2();
+        fetchStatement.setString(1, uidInput);
+        resultSet = fetchStatement.executeQuery();
         TreeMap<java.sql.Date, ArrayList<String>> valueMap = new TreeMap<>();
         valueMap.clear();
-        while (rs.next()) {
-            java.sql.Date d = rs.getDate(3);
-            String startTime = rs.getString(2);
-            String endTime = rs.getString(1);
+        while (resultSet.next()) {
+            java.sql.Date d = resultSet.getDate(3);
+            String startTime = resultSet.getString(2);
+            String endTime = resultSet.getString(1);
             Date d1 = convertFromSQLDateToJAVADate(d);
             valueMap.putIfAbsent((java.sql.Date) d1, new ArrayList<>());
             valueMap.get(d1).add(startTime);
@@ -152,7 +161,7 @@ public class BadmintonImp implements BadmintonInterface{
         s = valueMap.keySet();
         arr.addAll(s);
         logger.info("array" + arr);
-        if (ch == 2)
+        if (choice == 2)
             latestStreak((ArrayList<Date>) arr, logger,uidInput,lruObj);
 
 

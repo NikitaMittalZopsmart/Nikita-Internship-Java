@@ -13,7 +13,8 @@ public class CustomException extends Throwable {
 
     public void startPointException(Logger logger)
     {
-        logger.warning("Start Point must be less than 30");
+        logger.warning("Start Point must be less than 8");
+        logger.info("Enter valid start point again");
     }
 
     /**
@@ -22,16 +23,12 @@ public class CustomException extends Throwable {
      */
     public void endPointException(Logger logger)
     {
-        logger.warning("End point must be less than 30");
+        logger.warning("End point must be less than 8");
+        logger.info("Enter valid end point again");
+    }
+    public void connectionException(Logger logger){
+        logger.warning("404-No connection to database");
     }
 
-    /**
-     * This method is throwing exception when length of title is greater than 100.
-     * @param logger  A Logger Object.
-     */
-    public void titleException(Logger logger)
-    {
-        logger.warning("Title length is exceeding 100");
-    }
 
 }

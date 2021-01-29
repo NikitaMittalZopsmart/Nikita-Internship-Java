@@ -1,9 +1,9 @@
 package com.zs.HobbiesProject.MainStart;
 
 
-
 import com.zs.HobbiesProject.DAO.*;
 import com.zs.HobbiesProject.Model.Travel;
+
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -28,70 +28,78 @@ public class TravelMain {
      * @throws SQLException   Throwing SQLExceptions.
      * @throws ParseException Throwing ParseExceptions.
      */
-    public static void travelData(Logger logger,LRUMain lruObj) throws SQLException, ParseException {
-        int ch;
+    public static void travelData(Logger logger, LRUMain lruObject) throws SQLException, ParseException {
+        int choice;
         String inputDate;
-        TravelImp to = new TravelImp();
+        String startPoint=null;
+        String endPoint=null;
+        TravelImp travelImpObject = new TravelImp();
         DateFormat timeFormat = new SimpleDateFormat("hh:mm:ss");
-        Date d;
+        Date date;
+        int startPointFlag = 1;
+        int endPointFlag=1;
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Scanner scan = new Scanner(System.in);
         do {
-            logger.info("1.Create 2.LatestStreak 3.LongestStreak 4.Exit");
-            ch = scan.nextInt();
-
-
-            switch (ch) {
+            logger.info("1.Create 2.LatestStreak 3.Exit");
+            choice = scan.nextInt();
+            switch (choice) {
                 case 1:
                     logger.info("Enter Distance StartTime EndTime StartPoint EndPoint TickDate");
-                    Travel tObj = new Travel();
-                    tObj.setDistance(scan.nextFloat());
+                    Travel travelObject = new Travel();
+                    travelObject.setDistance(scan.nextFloat());
                     inputDate = scan.next();
-                    d = timeFormat.parse(inputDate);
-                    tObj.setStartTime(d);
+                    date = timeFormat.parse(inputDate);
+                    travelObject.setStartTime(date);
                     inputDate = scan.next();
-                    d = timeFormat.parse(inputDate);
-                    tObj.setEndTime(d);
-                    String startPoint = scan.next();
-                    String endPoint = scan.next();
-                    try {
-                        if (startPoint.length() > 30)
-                            throw new CustomException();
+                    date = timeFormat.parse(inputDate);
+                    travelObject.setEndTime(date);
 
+                    while (startPointFlag == 1) {
 
-                    } catch (CustomException e) {
-
-                        e.startPointException(logger);
+                        startPoint = scan.next();
+                        startPointFlag = 0;
+                        try {
+                            if (startPoint.length() > 8)
+                                throw new CustomException();
+                        } catch (CustomException e) {
+                            e.startPointException(logger);
+                            startPointFlag = 1;
+                        }
                     }
-                    try {
-                        if (endPoint.length() > 30)
-                            throw new CustomException();
-                    } catch (CustomException e) {
-                        e.endPointException(logger);
+
+                    while (endPointFlag== 1) {
+                        endPoint = scan.next();
+                        endPointFlag = 0;
+                        try {
+                            if (endPoint.length() > 8)
+                                throw new CustomException();
+                        } catch (CustomException e) {
+                            e.endPointException(logger);
+                            endPointFlag = 1;
+                        }
                     }
-                    tObj.setStartingPoint(startPoint);
-                    tObj.setEndPoint(endPoint);
+                    travelObject.setStartingPoint(startPoint);
+                    travelObject.setEndPoint(endPoint);
                     inputDate = scan.next();
-                    d = dateFormat.parse(inputDate);
-                    tObj.setTickDate(d);
-                    to.create(tObj, logger);
+                    date = dateFormat.parse(inputDate);
+                    travelObject.setTickDate(date);
+                    travelImpObject.create(travelObject, logger);
                     break;
-
                 case 2:
                     logger.info("please enter user id");
                     String uidInput = scan.next();
-                    to.streak(uidInput, logger, ch,lruObj);
+                    travelImpObject.streak(uidInput, logger, choice, lruObject);
                     break;
-                case 4:
+                case 3:
                     return;
                 default:
-                    throw new IllegalStateException("Unexpected value: " + ch);
-
+                    throw new IllegalStateException("Unexpected value: " + choice);
 
             }
 
-
-        } while (ch < 5);
+        }
+        while (choice < 5);
     }
 }
 

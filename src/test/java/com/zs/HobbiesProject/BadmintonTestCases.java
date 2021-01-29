@@ -1,4 +1,4 @@
-package Testing;
+package com.zs.HobbiesProject;
 
 import com.zs.HobbiesProject.Model.Badminton;
 import org.junit.Before;
@@ -16,8 +16,8 @@ import static org.junit.Assert.assertNotNull;
  * Test class to test Badminton Object.
  */
 public class BadmintonTestCases {
-    private Badminton badObject=new Badminton();
-    Date d;
+    private final Badminton badmintonObject =new Badminton();
+    Date date;
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     DateFormat timeFormat = new SimpleDateFormat("hh:mm:ss");
 
@@ -28,16 +28,16 @@ public class BadmintonTestCases {
     @Before
     public void start() throws ParseException {
         String inputDate ="20:01:12";
-        d = timeFormat.parse(inputDate);
-        badObject.setStartTime(d);
+        date = timeFormat.parse(inputDate);
+        badmintonObject.setStartTime(date);
         inputDate ="20:10:12";
-        d = timeFormat.parse(inputDate);
-        badObject.setEndTime(d);
+        date = timeFormat.parse(inputDate);
+        badmintonObject.setEndTime(date);
         inputDate ="2021-01-12";
-        d = dateFormat.parse(inputDate);
-        badObject.setTickDate(d);
-        badObject.setNumberOfMove(2);
-        badObject.setResult("Won");
+        date = dateFormat.parse(inputDate);
+        badmintonObject.setTickDate(date);
+        badmintonObject.setNumberOfMove(2);
+        badmintonObject.setResult("Won");
     }
 
     /**
@@ -46,15 +46,15 @@ public class BadmintonTestCases {
     @Test
     public void testGetResult()
     {
-        assertNotNull(badObject.getResult());
+        assertNotNull(badmintonObject.getResult());
     }
     /**
      * Testing getNumberOfMove function of Badminton class/
      */
     @Test
-    public void testGetNuberOfMove()
+    public void testGetNumberOfMove()
     {
-        assertEquals(3,badObject.getNumberOfMove());
+        assertEquals(3, badmintonObject.getNumberOfMove());
     }
     /**
      * Testing getStartTime function of Badminton class/
@@ -62,17 +62,17 @@ public class BadmintonTestCases {
     @Test
     public void testGetStartTime()
     {
-        assertNotNull(badObject.getStartTime());
+        assertNotNull(badmintonObject.getStartTime());
     }
     @Test
     public void testGetEndTime()
     {
-        assertNotNull(badObject.getEndTime());
+        assertNotNull(badmintonObject.getEndTime());
     }
     @Test
     public void testGetTickDate()
     {
-        assertNotNull(badObject.getTickDate());
+        assertNotNull(badmintonObject.getTickDate());
     }
 
     /**
@@ -81,6 +81,6 @@ public class BadmintonTestCases {
     @Test
     public void testCompleteObject()
     {
-        assertNotNull(badObject);
+        assertNotNull(badmintonObject);
     }
 }

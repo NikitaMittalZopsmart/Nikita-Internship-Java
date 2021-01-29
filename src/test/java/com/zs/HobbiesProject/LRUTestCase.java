@@ -1,4 +1,4 @@
-package Testing;
+package com.zs.HobbiesProject;
 import com.zs.HobbiesProject.Model.User;
 import com.zs.HobbiesProject.MainStart.LRUCache;
 import org.junit.Before;
@@ -23,11 +23,11 @@ public class LRUTestCase {
         int streak1;
         User u=new User();
         u.setHobbyName("Travel");
-        u.setuID("User1");
+        u.setUid("User1");
         streak1=3;
         cache.putCache(u,streak1);
          u=new User();
-        u.setuID("User2");
+        u.setUid("User2");
         u.setHobbyName("Video");
         streak1=4;
         cache.putCache(u,streak1);
@@ -37,7 +37,7 @@ public class LRUTestCase {
         streak1=5;
         cache.putCache(u,streak1);*/
         u=new User();
-        u.setuID("User1");
+        u.setUid("User1");
         u.setHobbyName("Travel");
         streak1=4;
         cache.putCache(u,streak1);
@@ -53,7 +53,7 @@ public class LRUTestCase {
         int actual = 0;
         for (Map.Entry<User, Integer> entry : entrySet) {
             {
-                if (entry.getKey().getuID().equals("User3"))
+                if (entry.getKey().getUid().equals("User3"))
                     actual = entry.getValue();
 
             }

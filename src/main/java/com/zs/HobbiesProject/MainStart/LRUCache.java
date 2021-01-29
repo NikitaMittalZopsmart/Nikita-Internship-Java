@@ -70,7 +70,10 @@ public class LRUCache<T1, T2> {
 
         return entrySet;
     }
-
+    public Map<T1, T2> returnMap()
+    {
+        return (map);
+    }
     public int sizeOfCache() {
         return map.size();
     }

@@ -16,50 +16,49 @@ import java.util.logging.Logger;
 public class BadmintonMain {
 
     public static void badmintonData(Logger logger, LRUMain lruObj) throws SQLException, ParseException {
-        int ch;
+        int choice;
         String inputDate;
-        BadmintonImp to = new BadmintonImp();
+        BadmintonImp badmintonImpObject = new BadmintonImp();
         DateFormat timeFormat = new SimpleDateFormat("hh:mm:ss");
-        Date d;
+        Date date;
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Scanner scan = new Scanner(System.in);
         do {
             logger.info("1.Create 2.LatestStreak 3.Exit");
-            ch = scan.nextInt();
+            choice = scan.nextInt();
 
 
-            switch (ch) {
+            switch (choice) {
                 case 1:
                     logger.info("Enter EndTime StartTime TickDate numberOfMove result");
-                    Badminton bObj=new Badminton();
-
+                    Badminton badmintonObj =new Badminton();
                     inputDate = scan.next();
-                    d = timeFormat.parse(inputDate);
-                    bObj.setStartTime(d);
+                    date = timeFormat.parse(inputDate);
+                    badmintonObj.setStartTime(date);
                     inputDate = scan.next();
-                    d = timeFormat.parse(inputDate);
-                    bObj.setEndTime(d);
+                    date = timeFormat.parse(inputDate);
+                    badmintonObj.setEndTime(date);
                     inputDate = scan.next();
-                    d = dateFormat.parse(inputDate);
-                    bObj.setTickDate(d);
-                    bObj.setNumberOfMove(scan.nextInt());
-                    bObj.setResult(scan.next());
-                    to.create(bObj, logger);
+                    date = dateFormat.parse(inputDate);
+                    badmintonObj.setTickDate(date);
+                    badmintonObj.setNumberOfMove(scan.nextInt());
+                    badmintonObj.setResult(scan.next());
+                    badmintonImpObject.create(badmintonObj, logger);
                     break;
 
                 case 2:
                     logger.info("please enter user id");
                     String uidInput = scan.next();
-                    to.streak(uidInput, logger, ch,lruObj);
+                    badmintonImpObject.streak(uidInput, logger, choice,lruObj);
                     break;
                 case 3:
                     System.exit(0);
                 default:
-                    throw new IllegalStateException("Unexpected value: " + ch);
+                    throw new IllegalStateException("Unexpected value: " + choice);
 
             }
 
 
-        } while (ch < 5);
+        } while (choice < 5);
     }
 }

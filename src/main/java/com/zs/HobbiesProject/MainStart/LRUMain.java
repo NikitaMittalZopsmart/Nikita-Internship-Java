@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 
 /**
- * This method is implementing LRU cache.
+ * This method is implementing cache.
  */
 public class LRUMain {
 
@@ -20,18 +20,18 @@ public class LRUMain {
     }
 
     /**
-     * This method is calling put funtion of cache to put the data.
+     * This method is calling put function of cache to put the data.
      * @param uid User ID
      * @param logger A logger Object
      * @param tableName Name of Hobby
-     * @param laStreak Value of LastStreak.
+     * @param latestStreak Value of LastStreak.
      */
-    public void putInCache(String uid, Logger logger, String tableName, int laStreak) {
+    public void putInCache(String uid, Logger logger, String tableName, int latestStreak) {
 
         User userObj = new User();
-        userObj.setuID(uid);
+        userObj.setUid(uid);
         userObj.setHobbyName(tableName);
-        cache.putCache(userObj, new Integer(laStreak));
+        cache.putCache(userObj, new Integer(latestStreak));
         logger.info("Successfully Inserted in cache");
         cache.displayCache();
     }
@@ -44,16 +44,14 @@ public class LRUMain {
      * @return Return true if value is present in cache.
      */
     public boolean getValue(String uId, Logger logger, String tableName) {
-        logger.info("In getvalue function");
-
-
+        logger.info("In get value function");
         Set<Map.Entry<User, Integer>> entrySet = cache.getVal();
         if (entrySet != null) {
             for (Map.Entry<User, Integer> entry : entrySet) {
-                User u = entry.getKey();
+                User userObject = entry.getKey();
 
-                String uid = u.getuID();
-                String tName = u.getHobbyName();
+                String uid = userObject.getUid();
+                String tName = userObject.getHobbyName();
                 if (uid.equals(uId) && tName.equals(tableName)) {
                     logger.info(String.valueOf(entry.getValue()));
                     logger.info("found in cache");

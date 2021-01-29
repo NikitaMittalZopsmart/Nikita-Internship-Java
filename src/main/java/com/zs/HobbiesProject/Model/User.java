@@ -2,8 +2,12 @@ package com.zs.HobbiesProject.Model;
 
 import java.util.Objects;
 
+/**
+ * This class is created for Users.
+ */
 public class User {
     String userID;
+    String hobbyName;
 
     @Override
     public boolean equals(Object o) {
@@ -18,17 +22,19 @@ public class User {
         return Objects.hash(userID, hobbyName);
     }
 
-    String hobbyName;
 
-    public String getuID() {
+    public String getUid() {
         return userID;
     }
-    public void setuID(String userID) {
+
+    public void setUid(String userID) {
         this.userID = userID;
     }
+
     public void setHobbyName(String hobbyName) {
         this.hobbyName = hobbyName;
     }
+
     public String getHobbyName() {
         return hobbyName;
     }

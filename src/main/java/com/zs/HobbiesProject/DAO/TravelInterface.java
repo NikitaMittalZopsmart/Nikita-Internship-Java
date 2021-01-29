@@ -13,8 +13,8 @@ import java.util.logging.Logger;
  * This is an interface for travel hobby.
  */
 public interface TravelInterface {
-    void create(Travel tObj, Logger logger) throws SQLException;
-    void latestStreak(ArrayList<Date> arr, Logger logger, String uidInput, LRUMain lruObj) throws SQLException;
-    void streak(String uidInput, Logger logger, int ch, LRUMain lruObj) throws SQLException;
+    void create(Travel travelObject, Logger logger) throws SQLException;
+    void latestStreak(ArrayList<Date> dateList, Logger logger, String uidInput, LRUMain lruObject) throws SQLException;
+    void streak(String uidInput, Logger logger, int choice, LRUMain lruObject) throws SQLException;
 
 }

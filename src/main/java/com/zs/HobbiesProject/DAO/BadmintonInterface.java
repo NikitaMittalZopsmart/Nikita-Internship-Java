@@ -8,9 +8,13 @@ import java.util.Date;
 import java.util.logging.Logger;
 import com.zs.HobbiesProject.Model.Badminton;
 import com.zs.HobbiesProject.MainStart.LRUMain;
+
+/**
+ * This is the interface for finding streak of a user having badminton hobby.
+ */
 public interface BadmintonInterface {
-    void create(Badminton tObj, Logger logger) throws SQLException;
-    void latestStreak(ArrayList<Date> arr, Logger logger, String uidInput,LRUMain lruObj) throws SQLException;
-    void streak(String uidInput, Logger logger, int ch, LRUMain lruObj) throws SQLException;
+    void create(Badminton badmintonObject, Logger logger) throws SQLException;
+    void latestStreak(ArrayList<Date> dateList, Logger logger, String uidInput, LRUMain lruObject) throws SQLException;
+    void streak(String uidInput, Logger logger, int choice, LRUMain lruObj) throws SQLException;
 
 }

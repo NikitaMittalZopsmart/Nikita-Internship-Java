@@ -15,19 +15,19 @@ public class Start{
 
     static Scanner scan = new Scanner(System.in);
 
-    public static void main(String args[]) throws SQLException, ParseException {
-        int ch;
-        LRUMain lruObj=new LRUMain();
+    public static void main(String[] args) throws SQLException, ParseException {
+        int choice;
+        LRUMain lruObject =new LRUMain();
        Logger logger= LogImplement.getLog();
 
         while (true) {
             logger.info("1.Badminton 2.Travel 3.Exit");
-            ch = scan.nextInt();
-            switch (ch) {
-                case 1:BadmintonMain.badmintonData(logger,lruObj);
+            choice = scan.nextInt();
+            switch (choice) {
+                case 1:BadmintonMain.badmintonData(logger, lruObject);
                        break;
                 case 2:
-                    TravelMain.travelData(logger,lruObj);
+                    TravelMain.travelData(logger, lruObject);
                     break;
                 case 3:
                     System.exit(0);
