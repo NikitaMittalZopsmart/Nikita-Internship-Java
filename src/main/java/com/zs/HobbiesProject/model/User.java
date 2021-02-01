@@ -1,4 +1,4 @@
-package com.zs.HobbiesProject.Model;
+package com.zs.HobbiesProject.model;
 
 import java.util.Objects;
 

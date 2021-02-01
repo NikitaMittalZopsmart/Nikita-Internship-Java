@@ -1,6 +1,6 @@
-package Testing;
-import com.zs.HobbiesProject.Model.User;
-import com.zs.HobbiesProject.MainStart.LRUCache;
+package com.zs.HobbiesProject;
+import com.zs.HobbiesProject.model.User;
+import com.zs.HobbiesProject.cache.LRUCache;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.zs.HobbiesProject.Util;
+package com.zs.HobbiesProject.util;
 
 /**
  * This class is used to make a logger object to implment logging.

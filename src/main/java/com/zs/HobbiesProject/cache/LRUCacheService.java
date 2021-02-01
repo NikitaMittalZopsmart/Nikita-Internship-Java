@@ -1,7 +1,7 @@
-package com.zs.HobbiesProject.MainStart;
+package com.zs.HobbiesProject.cache;
 
 
-import com.zs.HobbiesProject.Model.User;
+import com.zs.HobbiesProject.model.User;
 
 import java.util.Map;
 import java.util.Set;
@@ -11,11 +11,11 @@ import java.util.logging.Logger;
 /**
  * This method is implementing LRU cache.
  */
-public class LRUMain {
+public class LRUCacheService {
 
     private LRUCache cache = null;
 
-    public LRUMain() {
+    public LRUCacheService() {
         cache = new LRUCache<User,Integer>(3);
     }
 
@@ -43,7 +43,7 @@ public class LRUMain {
      * @param tableName Name of Hobby
      * @return Return true if value is present in cache.
      */
-    public boolean getValue(String uId, Logger logger, String tableName) {
+    public int getValue(String uId, Logger logger, String tableName) {
         logger.info("In getvalue function");
 
 
@@ -57,12 +57,12 @@ public class LRUMain {
                 if (uid.equals(uId) && tName.equals(tableName)) {
                     logger.info(String.valueOf(entry.getValue()));
                     logger.info("found in cache");
-                    return true;
+                    return entry.getValue();
                 }
             }
 
         }
-        return false;
+        return -1;
     }
 
 

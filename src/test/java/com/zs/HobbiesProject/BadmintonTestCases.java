@@ -1,6 +1,9 @@
-package Testing;
 
-import com.zs.HobbiesProject.Model.Badminton;
+package com.zs.HobbiesProject;
+import com.zs.HobbiesProject.exceptions.InvalidInputExceptions;
+import com.zs.HobbiesProject.model.Badminton;
+import com.zs.HobbiesProject.exceptions.NumberOfMoveException;
+import com.zs.HobbiesProject.Validator.Validator;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,7 +13,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test class to test Badminton Object.
@@ -20,7 +25,7 @@ public class BadmintonTestCases {
     Date d;
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     DateFormat timeFormat = new SimpleDateFormat("hh:mm:ss");
-
+    Validator validator=new Validator();
     /**
      * Initializing the Badminton Object.
      * @throws ParseException Throw Exception.
@@ -39,7 +44,10 @@ public class BadmintonTestCases {
         badObject.setNumberOfMove(2);
         badObject.setResult("Won");
     }
-
+    @Test(expected= InvalidInputExceptions.class)
+    public void validateNumberOfMove() throws InvalidInputExceptions {
+        validator.validateNumberOfMove(badObject.getNumberOfMove());
+    }
     /**
      * Testing getResult function of Badminton class/
      */
@@ -68,6 +76,10 @@ public class BadmintonTestCases {
     public void testGetEndTime()
     {
         assertNotNull(badObject.getEndTime());
+    }
+    @Test
+    public void testTime(){
+
     }
     @Test
     public void testGetTickDate()

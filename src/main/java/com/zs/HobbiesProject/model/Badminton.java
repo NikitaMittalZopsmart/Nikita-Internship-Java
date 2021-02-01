@@ -1,4 +1,4 @@
-package com.zs.HobbiesProject.Model;
+package com.zs.HobbiesProject.model;
 
 import java.util.Date;
 
@@ -10,6 +10,15 @@ public class Badminton extends Hobby {
     private String result;
 
 
+    @Override
+    public void setUserId(String userId) {
+        super.setUserId(userId);
+    }
+
+    @Override
+    public String getUserId() {
+        return super.getUserId();
+    }
 
     public void setResult(String result) {
         this.result = result;

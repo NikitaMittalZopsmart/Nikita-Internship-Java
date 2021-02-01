@@ -1,20 +1,18 @@
-package com.zs.HobbiesProject.DAO;
+package com.zs.HobbiesProject.dao;
 
 
-import com.zs.HobbiesProject.MainStart.LRUMain;
-import com.zs.HobbiesProject.Model.Travel;
-import com.zs.HobbiesProject.Util.ConnectionDb;
+import com.zs.HobbiesProject.model.Travel;
+import com.zs.HobbiesProject.util.ConnectionDb;
 
 import java.sql.*;
 import java.sql.Date;
 import java.util.*;
 import java.util.logging.Logger;
-import com.zs.HobbiesProject.MainStart.LRUMain;
-import com.zs.HobbiesProject.Model.Travel;
+
 /**
  * This class is implementing Travel Interface to perform database operations.
  */
-public class TravelImp implements TravelInterface {
+public class TravelImp  {
 
     private PreparedStatement stmt;
     private PreparedStatement stmt2;
@@ -68,23 +66,22 @@ public class TravelImp implements TravelInterface {
 
     /**
      * This method is created to insert a record in travel table.
-     * @param tObj An object of travel class.
+     * @param travelObject An object of travel class.
      * @param logger A logger Object.
      * @throws SQLException Throwing SQLExceptions.
      */
-    @Override
-    public void create(Travel tObj, Logger logger) throws SQLException {
 
-        logger.info("enter user id");
+    public void create(Travel travelObject, Logger logger) throws SQLException {
+
+
         prepareStatements1();
-        uid = scan.next();
-        stmt.setDate(1, convertUtilToSql(tObj.getEndTime()));
-        stmt.setDate(2, convertUtilToSql(tObj.getStartTime()));
-        stmt.setDate(3, convertUtilToSql(tObj.getTickDate()));
-        stmt.setString(4, tObj.getStartingPoint());
-        stmt.setString(5, tObj.getEndPoint());
-        stmt.setInt(6, (int) tObj.getDistance());
-        stmt.setString(7, uid);
+        stmt.setDate(1, convertUtilToSql(travelObject.getEndTime()));
+        stmt.setDate(2, convertUtilToSql(travelObject.getStartTime()));
+        stmt.setDate(3, convertUtilToSql(travelObject.getTickDate()));
+        stmt.setString(4, travelObject.getStartingPoint());
+        stmt.setString(5, travelObject.getEndPoint());
+        stmt.setInt(6, (int) travelObject.getDistance());
+        stmt.setString(7, travelObject.getUserId());
         int m = stmt.executeUpdate();
         if (m == 1)
             logger.info("successfully inserted");
@@ -96,12 +93,11 @@ public class TravelImp implements TravelInterface {
      * This method is created to calculate the latest streak for travel hobby for a particular user.
      * @param arr An arraylist have dates in a particular order.
      * @param logger A logger Object.
-     * @param uidInput User Id for which we are finding lateststreak.
+
      * @throws SQLException Throwing SQLException.
      */
-    @Override
-    public void latestStreak(ArrayList<java.util.Date> arr, Logger logger, String uidInput, LRUMain lruObj) throws SQLException {
-        logger.info("In lateststreak");
+
+    public int latestStreak(ArrayList<java.util.Date> arr, Logger logger) throws SQLException {
         int stIndex = 0;
         int endIndex;
         int max = 0;
@@ -115,8 +111,7 @@ public class TravelImp implements TravelInterface {
                 stIndex = j + 1;
             }
         }
-        logger.info("latestStreak"+max);
-        lruObj.putInCache(uidInput,logger,"travel",max);
+        return max;
 
     }
 
@@ -124,38 +119,32 @@ public class TravelImp implements TravelInterface {
      * This method is to get the dates for travel hobby for a particular object.
      * @param uidInput User Id for which we are finding latest streak.
      * @param logger A logger Object.
-     * @param ch A integer to decide which method is to call among lateststreak and loneststreak.
      * @throws SQLException Throwing SQLExceptions.
      */
-    @Override
-    public void streak(String uidInput, Logger logger, int ch,LRUMain lruObj) throws SQLException {
 
-       if(lruObj.getValue(uidInput,logger,"travel"))
-           return ;
-        logger.info("In streak");
+    public int streak(String uidInput, Logger logger) throws SQLException {
         List<java.util.Date> arr = new ArrayList<>();
         prepareStatements2();
         stmt2.setString(1, uidInput);
         rs = stmt2.executeQuery();
-        TreeMap<Date, ArrayList<String>> valueMap = new TreeMap<>();
+        TreeMap<java.sql.Date, ArrayList<String>> valueMap = new TreeMap<>();
         valueMap.clear();
         while (rs.next()) {
-            Date d = rs.getDate(3);
-            String startTime = rs.getString(1);
+            java.sql.Date d = rs.getDate(3);
+            String startTime = rs.getString(2);
             String endTime = rs.getString(1);
             java.util.Date d1 = convertFromSQLDateToJAVADate(d);
-            valueMap.putIfAbsent((Date) d1, new ArrayList<>());
+            valueMap.putIfAbsent((java.sql.Date) d1, new ArrayList<>());
             valueMap.get(d1).add(startTime);
             valueMap.get(d1).add(endTime);
-            valueMap.get(d1).add("travel");
+            valueMap.get(d1).add("badminton");
         }
-        Set<Date> s;
+        Set<java.sql.Date> s;
         s = valueMap.keySet();
         arr.addAll(s);
         logger.info("array" + arr);
-        if (ch == 2)
-            latestStreak((ArrayList<java.util.Date>) arr, logger,uidInput,lruObj);
-
+        int max=latestStreak((ArrayList<java.util.Date>) arr, logger);
+        return max;
 
     }
 }

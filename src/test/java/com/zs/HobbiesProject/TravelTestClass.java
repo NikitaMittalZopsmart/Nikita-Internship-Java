@@ -1,6 +1,11 @@
-package Testing;
+package com.zs.HobbiesProject;
 
-import com.zs.HobbiesProject.Model.Travel;
+import com.zs.HobbiesProject.exceptions.InvalidInputExceptions;
+import com.zs.HobbiesProject.model.Travel;
+import com.zs.HobbiesProject.exceptions.EndPointException;
+import com.zs.HobbiesProject.exceptions.StartEndTimeException;
+import com.zs.HobbiesProject.exceptions.StartPointException;
+import com.zs.HobbiesProject.Validator.Validator;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,7 +15,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test class to test travel object.
@@ -20,7 +27,7 @@ public class TravelTestClass {
     Date d;
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     DateFormat timeFormat = new SimpleDateFormat("hh:mm:ss");
-
+    Validator validator=new Validator();
     /**
      * Intializing all value for Travel Object.
      * @throws ParseException Throwing exception.
@@ -40,6 +47,18 @@ public class TravelTestClass {
         traObject.setEndPoint("UP");
         traObject.setStartingPoint("MP");
 
+    }
+    @Test(expected = InvalidInputExceptions.class)
+    public void testValidatorStartPoint() throws InvalidInputExceptions{
+        validator.validateStartPoint(traObject.getStartingPoint());
+    }
+    @Test(expected =InvalidInputExceptions.class)
+    public void testValidateEndPoint() throws InvalidInputExceptions {
+        validator.validateEndPoint(traObject.getEndPoint());
+    }
+    @Test(expected = InvalidInputExceptions.class)
+    public void testvalidateStartEndTime() throws InvalidInputExceptions {
+        validator.validateStartEndTime(traObject.getStartTime(),traObject.getEndTime());
     }
     @Test
     public void testGetStartPoint()

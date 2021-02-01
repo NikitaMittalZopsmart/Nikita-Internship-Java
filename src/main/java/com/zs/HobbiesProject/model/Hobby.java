@@ -1,4 +1,4 @@
-package com.zs.HobbiesProject.Model;
+package com.zs.HobbiesProject.model;
 
 import java.util.Date;
 
@@ -9,7 +9,7 @@ public class Hobby {
 
     private Date startTime = null;
     private Date endTime = null;
-
+    private String userId;
     private Date tickDate;
 
 
@@ -27,6 +27,14 @@ public class Hobby {
 
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getUserId() {
+        return userId;
     }
 
     public Hobby() {
