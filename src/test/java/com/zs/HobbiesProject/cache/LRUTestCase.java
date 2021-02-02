@@ -1,4 +1,4 @@
-package com.zs.HobbiesProject;
+package com.zs.HobbiesProject.cache;
 import com.zs.HobbiesProject.model.User;
 import com.zs.HobbiesProject.cache.LRUCache;
 import org.junit.Before;
@@ -53,7 +53,7 @@ public class LRUTestCase {
         int actual = 0;
         for (Map.Entry<User, Integer> entry : entrySet) {
             {
-                if (entry.getKey().getuID().equals("User3"))
+                if (entry.getKey().getuID().equals("User1"))
                     actual = entry.getValue();
 
             }
@@ -74,7 +74,7 @@ public class LRUTestCase {
 
         int size= cache.sizeOfCache();
 
-        assertEquals(4,size);
+        assertEquals(2,size);
     }
 
     /**
@@ -95,7 +95,7 @@ public class LRUTestCase {
             break;
 
         }
-        assertEquals(3,actual);
+        assertEquals(4,actual);
     }
 
 

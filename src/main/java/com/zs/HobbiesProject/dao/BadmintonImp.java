@@ -8,20 +8,24 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeMap;
 import java.util.logging.Logger;
 
 public class BadmintonImp {
 
+    String uid;
+    ResultSet resultSet;
+    Scanner scan = new Scanner(System.in);
     private PreparedStatement insertStatement;
     private PreparedStatement fetchStatement;
     private Connection connection;
-
     private ConnectionDb connectionObject = new ConnectionDb();
-    String uid;
-    ResultSet resultSet;
-
-    Scanner scan = new Scanner(System.in);
 
     /**
      * This funtion is converting a date from java.util to java.sql.
@@ -29,7 +33,7 @@ public class BadmintonImp {
      * @param uDate A date in java.util format.
      * @return A date in java.sql format.
      */
-    private static java.sql.Date convertUtilToSql(Date uDate) {
+    public static java.sql.Date convertUtilToSql(Date uDate) {
         return (new java.sql.Date(uDate.getTime()));
     }
 
@@ -53,9 +57,10 @@ public class BadmintonImp {
      *
      * @throws SQLException Throwing SQLException.
      */
-    public void prepareStatements1() throws SQLException {
+    public PreparedStatement prepareStatements1() throws SQLException {
         connection = connectionObject.connection();
         insertStatement = connection.prepareStatement("insert into badminton values(?,?,?,?,?,?);");
+         return insertStatement;
     }
 
     /**
@@ -63,9 +68,10 @@ public class BadmintonImp {
      *
      * @throws SQLException Throwing SQLException.
      */
-    public void prepareStatements2() throws SQLException {
+    public PreparedStatement prepareStatements2() throws SQLException {
         connection = connectionObject.connection();
         fetchStatement = connection.prepareStatement("select * from badminton where user_id=? order by hobby_date ;");
+        return fetchStatement;
     }
 
     /**
@@ -76,9 +82,9 @@ public class BadmintonImp {
      * @throws SQLException Throwing SQLExceptions.
      */
 
-    public void create(Badminton badmintonObject, Logger logger) throws SQLException {
+    public int create(Badminton badmintonObject, Logger logger) throws SQLException {
 
-        prepareStatements1();
+        insertStatement= prepareStatements1();
         insertStatement.setDate(1, convertUtilToSql(badmintonObject.getEndTime()));
         insertStatement.setDate(2, convertUtilToSql(badmintonObject.getStartTime()));
         insertStatement.setDate(3, convertUtilToSql(badmintonObject.getTickDate()));
@@ -91,17 +97,18 @@ public class BadmintonImp {
             logger.info("successfully inserted");
         else
             logger.info("not inserted");
+        return m;
     }
 
     /**
      * This method is created to calculate the latest streak for badminton hobby for a particular user.
      *
-     * @param dateList    An arraylist have dates in a particular order.
-     * @param logger A logger Object.
+     * @param dateList An arraylist have dates in a particular order.
+
      * @throws SQLException Throwing SQLException.
      */
 
-    public int latestStreak(ArrayList<Date> dateList, Logger logger) throws SQLException {
+    public int latestStreak(ArrayList<Date> dateList) throws SQLException {
         int startIndex = 0;
         int endIndex;
         int max = 0;
@@ -129,7 +136,7 @@ public class BadmintonImp {
 
     public int streak(String uidInput, Logger logger) throws SQLException {
         List<Date> dateList = new ArrayList<>();
-        prepareStatements2();
+        fetchStatement=prepareStatements2();
         fetchStatement.setString(1, uidInput);
         resultSet = fetchStatement.executeQuery();
         TreeMap<java.sql.Date, ArrayList<String>> valueMap = new TreeMap<>();
@@ -148,7 +155,7 @@ public class BadmintonImp {
         s = valueMap.keySet();
         dateList.addAll(s);
         logger.info("array" + dateList);
-        int max = latestStreak((ArrayList<Date>) dateList, logger);
+        int max = latestStreak((ArrayList<Date>) dateList);
         return max;
 
     }

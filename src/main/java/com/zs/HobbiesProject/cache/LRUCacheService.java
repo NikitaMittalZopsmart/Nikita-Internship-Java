@@ -44,7 +44,7 @@ public class LRUCacheService {
      * @return Return true if value is present in cache.
      */
     public int getValue(String uId, Logger logger, String tableName) {
-        logger.info("In getvalue function");
+        logger.info("In get value function");
 
 
         Set<Map.Entry<User, Integer>> entrySet = cache.getVal();

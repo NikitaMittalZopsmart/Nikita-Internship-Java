@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 public class TravelService {
     TravelImp travelImplment =new TravelImp();
     public void create(Travel travelObject, Logger logger,LRUCacheService lruServiceObject) throws SQLException {
-        travelImplment.create(travelObject,logger);
+        int m=travelImplment.create(travelObject,logger);
         int max=travelImplment.streak(travelObject.getUserId(),logger);
         lruServiceObject.putInCache(travelObject.getUserId(),logger,"travel",max);
 

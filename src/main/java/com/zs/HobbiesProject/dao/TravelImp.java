@@ -16,8 +16,8 @@ public class TravelImp  {
 
     private PreparedStatement stmt;
     private PreparedStatement stmt2;
-    private Connection c;
-    private ConnectionDb cObj=new ConnectionDb();
+    private Connection connection;
+    private ConnectionDb connectionObject = new ConnectionDb();
     String uid;
     ResultSet rs;
 
@@ -28,7 +28,7 @@ public class TravelImp  {
      * @param uDate A date in java.util format.
      * @return A date in java.sql format.
      */
-    private static Date convertUtilToSql(java.util.Date uDate) {
+    public static Date convertUtilToSql(java.util.Date uDate) {
         return (new Date(uDate.getTime()));
     }
 
@@ -50,9 +50,10 @@ public class TravelImp  {
      * This function is used to create a preparedStatement for inserting values in travel table.
      * @throws SQLException Throwing SQLException.
      */
-    public void prepareStatements1() throws SQLException {
-        c = cObj.connection();
-        stmt = c.prepareStatement("insert into travel values(?,?,?,?,?,?,?);");
+    public PreparedStatement prepareStatements1() throws SQLException {
+        connection = connectionObject.connection();
+        stmt = connection.prepareStatement("insert into travel values(?,?,?,?,?,?,?);");
+        return stmt;
     }
 
     /**
@@ -60,8 +61,8 @@ public class TravelImp  {
      * @throws SQLException Throwing SQLException.
      */
     public void prepareStatements2() throws SQLException {
-        c = cObj.connection();
-        stmt2 = c.prepareStatement("select * from travel where user_id=? order by hobby_date ;");
+        connection = connectionObject.connection();
+        stmt2 = connection.prepareStatement("select * from travel where user_id=? order by hobby_date ;");
     }
 
     /**
@@ -71,10 +72,13 @@ public class TravelImp  {
      * @throws SQLException Throwing SQLExceptions.
      */
 
-    public void create(Travel travelObject, Logger logger) throws SQLException {
+    public int create(Travel travelObject, Logger logger) throws SQLException {
 
 
-        prepareStatements1();
+        connection = connectionObject.connection();
+        stmt = connection.prepareStatement("insert into travel values(?,?,?,?,?,?,?);");
+
+
         stmt.setDate(1, convertUtilToSql(travelObject.getEndTime()));
         stmt.setDate(2, convertUtilToSql(travelObject.getStartTime()));
         stmt.setDate(3, convertUtilToSql(travelObject.getTickDate()));
@@ -87,17 +91,18 @@ public class TravelImp  {
             logger.info("successfully inserted");
         else
             logger.info("not inserted");
+        return m;
     }
 
     /**
      * This method is created to calculate the latest streak for travel hobby for a particular user.
      * @param arr An arraylist have dates in a particular order.
-     * @param logger A logger Object.
+
 
      * @throws SQLException Throwing SQLException.
      */
 
-    public int latestStreak(ArrayList<java.util.Date> arr, Logger logger) throws SQLException {
+    public int latestStreak(ArrayList<java.util.Date> arr) throws SQLException {
         int stIndex = 0;
         int endIndex;
         int max = 0;
@@ -143,7 +148,7 @@ public class TravelImp  {
         s = valueMap.keySet();
         arr.addAll(s);
         logger.info("array" + arr);
-        int max=latestStreak((ArrayList<java.util.Date>) arr, logger);
+        int max=latestStreak((ArrayList<java.util.Date>) arr);
         return max;
 
     }

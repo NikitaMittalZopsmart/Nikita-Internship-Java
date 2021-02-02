@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 public class BadmintonService {
     BadmintonImp badmintonImplement =new BadmintonImp();
     public void create(Badminton badmintonObject, Logger logger,LRUCacheService lruServiceObject) throws SQLException {
-        badmintonImplement.create(badmintonObject,logger);
+        int m=badmintonImplement.create(badmintonObject,logger);
         int max=badmintonImplement.streak(badmintonObject.getUserId(),logger);
         lruServiceObject.putInCache(badmintonObject.getUserId(),logger,"badminton",max);
     }

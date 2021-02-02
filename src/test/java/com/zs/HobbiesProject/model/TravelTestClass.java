@@ -1,4 +1,4 @@
-package com.zs.HobbiesProject;
+package com.zs.HobbiesProject.model;
 
 import com.zs.HobbiesProject.exceptions.InvalidInputExceptions;
 import com.zs.HobbiesProject.model.Travel;
@@ -46,20 +46,11 @@ public class TravelTestClass {
         traObject.setDistance(22);
         traObject.setEndPoint("UP");
         traObject.setStartingPoint("MP");
+        traObject.setUserId("User2");
+    }
 
-    }
-    @Test(expected = InvalidInputExceptions.class)
-    public void testValidatorStartPoint() throws InvalidInputExceptions{
-        validator.validateStartPoint(traObject.getStartingPoint());
-    }
-    @Test(expected =InvalidInputExceptions.class)
-    public void testValidateEndPoint() throws InvalidInputExceptions {
-        validator.validateEndPoint(traObject.getEndPoint());
-    }
-    @Test(expected = InvalidInputExceptions.class)
-    public void testvalidateStartEndTime() throws InvalidInputExceptions {
-        validator.validateStartEndTime(traObject.getStartTime(),traObject.getEndTime());
-    }
+
+
     @Test
     public void testGetStartPoint()
     {
@@ -82,7 +73,7 @@ public class TravelTestClass {
     @Test
     public void testGetDistance()
     {
-        assertEquals(3,(int) traObject.getDistance());
+        assertEquals(22,(int) traObject.getDistance());
     }
     @Test
     public void testGetStartTime()

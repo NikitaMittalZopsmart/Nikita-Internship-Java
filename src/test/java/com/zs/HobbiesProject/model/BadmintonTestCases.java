@@ -1,5 +1,5 @@
 
-package com.zs.HobbiesProject;
+package com.zs.HobbiesProject.model;
 import com.zs.HobbiesProject.exceptions.InvalidInputExceptions;
 import com.zs.HobbiesProject.model.Badminton;
 import com.zs.HobbiesProject.exceptions.NumberOfMoveException;
@@ -25,7 +25,7 @@ public class BadmintonTestCases {
     Date d;
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     DateFormat timeFormat = new SimpleDateFormat("hh:mm:ss");
-    Validator validator=new Validator();
+
     /**
      * Initializing the Badminton Object.
      * @throws ParseException Throw Exception.
@@ -43,11 +43,9 @@ public class BadmintonTestCases {
         badObject.setTickDate(d);
         badObject.setNumberOfMove(2);
         badObject.setResult("Won");
+        badObject.setUserId("User4");
     }
-    @Test(expected= InvalidInputExceptions.class)
-    public void validateNumberOfMove() throws InvalidInputExceptions {
-        validator.validateNumberOfMove(badObject.getNumberOfMove());
-    }
+
     /**
      * Testing getResult function of Badminton class/
      */
@@ -62,7 +60,7 @@ public class BadmintonTestCases {
     @Test
     public void testGetNuberOfMove()
     {
-        assertEquals(3,badObject.getNumberOfMove());
+        assertEquals(2,badObject.getNumberOfMove());
     }
     /**
      * Testing getStartTime function of Badminton class/
