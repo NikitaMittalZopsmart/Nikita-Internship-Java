@@ -1,4 +1,4 @@
-package main.java.com.zs.exc1;
+package com.zs.exc1;
 
 import java.util.Scanner;
 import java.util.Stack;
